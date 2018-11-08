@@ -1,5 +1,5 @@
-drop table if exists documents;
 drop table if exists index;
+drop table if exists documents;
 
 -- Document data store.
 create table documents (
@@ -7,7 +7,9 @@ create table documents (
   -- 2000 characters in a url is the maximum needed for widespread support
   url varchar(2000),
   pagerank numeric(7,6),
-  title varchar(1024),
+  norm_pagerank numeric(7,6),
+  title text,
+  description text,
   sect_headings text[],
   body text[]
 );
