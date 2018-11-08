@@ -1,36 +1,35 @@
-import asyncio
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-# We received a JSON message over the socket,
-# handle it here.
-async def handle_message(reader, writer):
-    data = await reader.read(100)
-    message = json.loads(data.decode())
-    
-    addr = writer.get_extra_info('peername')
-    
-    # DEBUG: Display the JSON message we received
-    print("Received from %r: %r" % (addr, message))
-    
-    # TODO: Additional message handling
+PORT_NUMBER = 5350
 
-    # Send a response back to the client
+# Handle requests.
+class messageHandler(BaseHTTPRequestHandler):
     
-    # TODO: For now, test response
-    response = {'test' : 'Test Response'}
-    writer.write(json.dumps(response).encode())
-    writer.close()
+    # For now, we only care about handling POST requests.
+    def do_POST(self):
+        contentLength = int(self.headers['Content-Length'])
+        postData = self.rfile.read(contentLength)
+        
+        message = json.loads(postData)
+        
+        print('Received %r' % message)
+        
+        self.send_response(200)
+        
+        message = {'testkey' : 'testresponse'}
+        
+        self.send_header('Content-type','text/html')
+        self.end_headers()
+        self.wfile.write(json.dumps(message).encode('utf-8'))
+        return
 
-loop = asyncio.get_event_loop()
-coro = asyncio.start_server(handle_message, '0.0.0.0', 5350, loop=loop)
-server = loop.run_until_complete(coro)
-
-print('Serving on {}'.format(server.sockets[0].getsockname()))
 try:
-    loop.run_forever()
-except KeyboardInterrupt:
-    pass
+    server = HTTPServer(('', PORT_NUMBER), messageHandler)
+    print('Serving on port ' , PORT_NUMBER)
 
-server.close()
-loop.run_until_complete(server.wait_closed())
-loop.close() 
+    server.serve_forever()
+
+except KeyboardInterrupt:
+    print('Shutting down')
+    server.socket.close()
