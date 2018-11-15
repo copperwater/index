@@ -14,21 +14,22 @@ class ApiRequests():
 			insert into index values(ngram[gram],ngram[in_title],ngram[in_description],ngram[in_keywords],ngram[freq_headings],ngram[freq_text])
 
 
-		
+
 	def Crawling(dict):
 		if(dict[operation] == "removed"):
 			delete from documents where url = dict[url]
 			##delete  from index
 
 		if(dict[operation] == "moved"):
-			update documents 
-			set url = dict[url]
-			where url = dict[url]
+			update documents
+			set old_url = url,
+				url = dict[new_url]
+			where old_url = dict[old_url]
 
 	def Ranking(dict):
 		update documents
 		set pagerank = dict[pagerank] ,  norm_pagerank = dict[norm_pagerank]
-		where documents_pk = dict[url]
+		where url = dict[url]
 
 
 ##	def Link(dict):
