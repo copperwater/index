@@ -2,7 +2,7 @@ class serverObject:
 
     def __init__(self, name):
         self.name = name
-        
+
     def toParam(self):
         return [self]
 
@@ -12,6 +12,10 @@ class text_Transformation(serverObject):
         self.meta_data = dict[Metadata]
         self.text = dict[text]
         self.grams = dict[grams]
+
+    def query():
+        # generic query structure for TextTransformation
+        return ""
 
     def toParam(self):
         return [self.meta_data, self.text, self.grams]
@@ -23,6 +27,10 @@ class link_Analysis(serverObject):
         self.page_rank = dict[pagerank]
         self.inlinks = dict[inlinks]
 
+    def query():
+        # generic query structure for TextTransformation
+        return ""
+
     def toParam(self):
         return [self.url, self.pagerank, self.inlinks]
 
@@ -32,6 +40,10 @@ class crawling(serverObject):
         self.url = dict[url]
         self.old_url = dict[old_url]
         self.operation = dict[operation]
+
+    def query():
+        # generic query structure for TextTransformation
+        return ""
 
     def toParam(self):
         return [self.url, self.old_url, self.operation]

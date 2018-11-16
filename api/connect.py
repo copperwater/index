@@ -4,8 +4,7 @@ from config import config
 
 class connect():
     # serverObject is from TextTransformation, Crawling, or Link Analysis
-    # stored_Procedure_Name is the name of the procedure that matches the server object being inserted
-    def insert(server_Object, stored_Procedure_Name):
+    def insert(server_Object):
         """ Connect to the PostgreSQL database server and Insert or Update Text Transformation"""
         conn = None
         try:
@@ -19,8 +18,8 @@ class connect():
             cur = conn.cursor()
 
             # execute a stored procedure
-            cur.callproc(stored_Procedure_Name, server_Object.toParam())
-
+            cur.execute(serverObject.query(), server_Object.toParam())
+            
             # The PostgreSQL database server response
             insert/update_Response = cur.fetchone()
             # print(insert/update_Response)

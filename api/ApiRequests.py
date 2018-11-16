@@ -55,7 +55,7 @@ class ApiRequests():
 		return False
 
 
-		
+
 	def Crawling(dict):
 		sql = """delete from documents where url = %s"""
 
