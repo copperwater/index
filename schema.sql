@@ -29,3 +29,7 @@ create table index (
   constraint index_pk primary key (ngram, docid),
   constraint doc_fk foreign key (docid) references documents(id)
 );
+
+grant select on table index to ranking;
+grant select on table documents to ranking;
+grant select on table documents to querying;
