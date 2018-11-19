@@ -16,10 +16,13 @@ class connect():
 
             # create a cursor
             cur = conn.cursor()
+            # returns a dict with queries as keys and
+            queries = serverObject.query()
 
-            # execute a stored procedure
-            cur.execute(serverObject.query(), server_Object.toParam())
-            
+            for query, parameters in queries.items():
+                # execute a stored procedure
+                cur.execute(query, parameters)
+
             # The PostgreSQL database server response
             insert/update_Response = cur.fetchone()
             # print(insert/update_Response)
