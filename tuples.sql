@@ -13,7 +13,7 @@ insert into documents values (2, 'http://example.com', 1.12, 0.77,
   'Example Domain',
   null,
   array['Example Domain'],
-  array['this domain is established to be used for illustrative examples in documents you may use this domain in examples without prior coordination or asking for permission', 'more information'],
+  array['This domain is established to be used helpfully for the', 'More Information'],
   '2018-12-25',
   '2011-07-21'
 );
@@ -46,3 +46,20 @@ insert into index values ('fish fish fish', 1, false, false, false, 0, 1.0000);
 -- 4- and 5-grams, body text
 insert into index values ('fish fish fish fish', 1, false, false, false, 0, 1.0000);
 insert into index values ('fish fish fish fish fish', 1, false, false, false, 0, 1.0000);
+
+-- 1-grams...
+-- Assuming: stop words include: this, is, to, be, for, the, it; and are not included.
+insert into index values ('example', 2, true, false, true, 0.5, 0);
+insert into index values ('domain', 2, true, false, false, 0.5, 0.1);
+insert into index values ('established', 2, false, false, false, 0, 0.1);
+insert into index values ('used', 2, false, false, false, 0, 0.1);
+insert into index values ('helpfully', 2, false, false, false, 0, 0.1);
+-- 2-grams...
+-- Assuming: n-grams with stop words at either end don't count, except to add to the frequency.
+insert into index values ('used helpfully', 2, false, false, false, 0, 0.1111);
+-- 3-grams...
+insert into index values ('domain is established', 2, false, false, false, 0, 0.125);
+-- 4-grams...
+insert into index values ('established to be used', 2, false, false, false, 0, 0.1429);
+-- 5-grams...
+insert into index values ('established to be used helpfully', 2, false, false, false, 0, 0.1666);
