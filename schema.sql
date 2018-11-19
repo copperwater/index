@@ -18,13 +18,14 @@ create table documents (
 
 -- Inverted index relation.
 create table index (
-  ngram varchar(256) constraint index_pk primary key,
-  docid int constraint index_pk primary key,
+  ngram varchar(256),
+  docid int,
   in_title boolean not null,
   in_desc boolean not null,
   in_keywords boolean not null,
   freq_headings numeric(7,6) not null,
   freq_text numeric(7,6) not null,
 
+  constraint index_pk primary key (ngram, docid),
   constraint doc_fk foreign key (docid) references documents(id)
 );
