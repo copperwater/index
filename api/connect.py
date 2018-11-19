@@ -16,15 +16,15 @@ class connect():
 
             # create a cursor
             cur = conn.cursor()
-            # returns a dict with queries as keys and
+            # returns an array of tuples containing the query and parameters
             queries = serverObject.query()
 
-            for query, parameters in queries.items():
+            for (query, parameters) in queries:
                 # execute a stored procedure
                 cur.execute(query, parameters)
 
             # The PostgreSQL database server response
-            insert/update_Response = cur.fetchone()
+            response = cur.fetchone()
             # print(insert/update_Response)
 
             # Close the communication with the PostgreSQL

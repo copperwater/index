@@ -16,17 +16,39 @@ class text_Transformation(serverObject):
 
     def query(self):
         # generic query structure for TextTransformation
-        parameter = (self.dict[Metadata][DOCID], self.dict[Metadata][url],
-          self.dict[Metadata][Title],
-          self.dict[Metadata][Descriptions],
+        parameter = (self.dict[Metadata][DOCID], self.dict[metadata][url],
+          self.dict[metadata][title],
+          self.dict[metadata][description],
           self.dict[Text][headings],
           self.dict[Text][body])
         query = "insert into documents (id, url, title, description, sect_headings, paragraphs) values (%s, %s, %s,%s,%s,%s)"
-        return_dict = {query:parameter}
-        for ngram in self.dict[grams]
-            parameter =
-            query = "insert into index values(%s,%s,%s,%s,%s,%s)"
-        return
+        arr = [(query,parameter)]
+        for ngram_type, list_ngram_type in self.dict[ngrams][all]:
+            if !list_ngram_type:
+                continue
+            #find the total number of occurences of 1ngrams, 2grams, 3grams, 4grams, and 5grmas
+            #before we find frequency
+            total_in_ngram_type = 0
+            for ngram, occurence in list_ngram_type:
+                total_in_ngram_type += occurence
+            #header occurence of the ngram
+            header_occurence = 0
+            #total header occurences of the ngram type (ie. 1gram, 2gram, etc...)
+            total_header_in_ngram_type = 0
+            for ngram, occurence in self.dict[ngrams][headers][ngram_type]:
+                total_header_in_ngram_type += occurence
+            #loop through the actual ngrams
+            for ngram, occurence in list_ngram_type:
+                #if the ngram is in the headers get the occurence
+                if ngram in self.dict[ngrams][headers][ngram_type]:
+                    header_occurence = self.dict[ngrams][headers][ngram_type].get(ngram)
+                parameters = (ngram, self.dict[Metadata][DOCID], ngram in self.dict[ngrams][title][ngram_type],
+                    ngram in self.dict[Metadata][Descriptions], ngram in self.dict[metadata][keywords],
+                    float(header_occurence)/total_header_in_ngram_type,
+                    float(occurence)/total_in_ngram_type)
+                query1 = "insert into index (ngram, docid, in_title, in_desc, in_keywords, freq_headings, freq_text) values (%s,%s,%s,%s,%s,%s,%s)"
+                arr.append((query1, parameters))
+        return arr
 
     def toParam(self):
         return [self.meta_data, self.text, self.grams]
@@ -52,9 +74,13 @@ class crawling(serverObject):
         self.old_url = dict[old_url]
         self.operation = dict[operation]
 
-    def query():
+    def query(self):
         # generic query structure for TextTransformation
-        return ""
+        arr = []
+        for url in self.dict[urls]:
+            query = "delete from documents where url = %s"
+            arr.append((query, (url,)))
+        return arr
 
     def toParam(self):
         return [self.url, self.old_url, self.operation]
