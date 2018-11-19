@@ -11,15 +11,17 @@ create table documents (
   title text,
   description text,
   sect_headings text[],
-  body text[]
+  paragraphs text[],
+  date_crawled date,
+  date_updated date
 );
 
 -- Inverted index relation.
 create table index (
   ngram varchar(256) constraint index_pk primary key,
-  docid int not null,
+  docid int constraint index_pk primary key,
   in_title boolean not null,
-  in_description boolean not null,
+  in_desc boolean not null,
   in_keywords boolean not null,
   freq_headings numeric(7,6) not null,
   freq_text numeric(7,6) not null,

@@ -6,12 +6,16 @@ insert into documents values (1, 'http://tropicalfish.com', 0.87, 0.51,
   'The best tropical fish!',
   array['finest fish', 'fishy fish', 'freds fish'],
   array['fish fish fish fish fish', 'fish fish fish', 'fish fish fish fish fish fish fish', 'fish fish']
+  to_date('2018-04-06','YYYY-MM-DD'),
+  to_date('2018-01-15','YYYY-MM-DD')
 );
 insert into documents values (2, 'http://example.com', 1.12, 0.77,
   'Example Domain',
   null,
   array['Example Domain'],
   array['this domain is established to be used for illustrative examples in documents you may use this domain in examples without prior coordination or asking for permission', 'more information']
+  to_date('2018-12-25','YYYY-MM-DD'),
+  to_date('2011-07-21','YYYY-MM-DD')
 );
 
 -- 1-grams...
