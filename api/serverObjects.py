@@ -60,9 +60,13 @@ class link_Analysis(serverObject):
         self.page_rank = dict[pagerank]
         self.inlinks = dict[inlinks]
 
-    def query():
+    def query(self):
         # generic query structure for TextTransformation
-        return ""
+        arr = []
+        query = "update documents set pagerank = %s,  norm_pagerank = %s where url = %s"
+        parameters = (self.dict[pagerank],self.dict[norm_pagerank],self.dict[url],)
+        arr.append((query, parameters))
+        return arr
 
     def toParam(self):
         return [self.url, self.pagerank, self.inlinks]
@@ -77,9 +81,8 @@ class crawling(serverObject):
     def query(self):
         # generic query structure for TextTransformation
         arr = []
-        for url in self.dict[urls]:
-            query = "delete from documents where url = %s"
-            arr.append((query, (url,)))
+        query = "delete from documents where url = %s"
+        arr.append((query, (self.dict[url],)))
         return arr
 
     def toParam(self):
