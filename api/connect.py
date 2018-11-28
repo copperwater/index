@@ -2,6 +2,7 @@ import psycopg2
 import serverObjects.py
 from config import config
 
+
 class connect():
     # serverObject is from TextTransformation, Crawling, or Link Analysis
     def insert(server_Object):
