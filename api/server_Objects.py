@@ -101,8 +101,9 @@ class crawling(server_Object):
     def query(self):
         # generic query structure for TextTransformation
         arr = []
-        query = "delete from documents where url = %s"
-        arr.append((query, (self.dict[url],)))
+        for link in self.url:
+            query = "delete from documents where url = %s"
+            arr.append((query, (link,)))
         return arr
 
     #unused function since query returns a list of tuples for (query, parameter)
