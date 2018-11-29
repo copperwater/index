@@ -39,8 +39,10 @@ class connect():
 
             # Close the communication with the PostgreSQL
             cur.close()
+            return "It Works"
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+            return error
         finally:
             if conn is not None:
                 conn.close()
