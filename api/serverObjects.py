@@ -59,6 +59,7 @@ class text_Transformation(serverObject):
                 arr.append((query1, parameters))
         return arr
 
+    #unused function since query returns a list of tuples for (query, parameter)
     def toParam(self):
         return [self.meta_data, self.text, self.grams]
 
@@ -82,6 +83,7 @@ class link_Analysis(serverObject):
         arr.append((query, parameters))
         return arr
 
+    #unused function since query returns a list of tuples for (query, parameter)
     def toParam(self):
         return [self.url, self.pagerank, self.inlinks]
 
@@ -100,5 +102,6 @@ class crawling(serverObject):
         arr.append((query, (self.dict[url],)))
         return arr
 
+    #unused function since query returns a list of tuples for (query, parameter)
     def toParam(self):
         return [self.url, self.old_url, self.operation]
