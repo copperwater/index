@@ -1,4 +1,4 @@
-class serverObject:
+class server_Object:
 
     def __init__(self, name):
         self.name = name
@@ -7,7 +7,7 @@ class serverObject:
         return [self]
 
 
-class text_Transformation(serverObject):
+class text_Transformation(server_Object):
 
     def __init__(self, dict):
         self.dict = dict
@@ -15,15 +15,20 @@ class text_Transformation(serverObject):
         self.text = dict[text]
         self.grams = dict[grams]
 
-    def query(self):
-        # generic query structure for TextTransformation
-        parameter = (self.dict[Metadata][DOCID], self.dict[metadata][url],
+    def addId(self, int id):
+        self.id = id
+
+    def insertDoc(self):
+        parameter = (self.dict[metadata][url],
                      self.dict[metadata][title],
                      self.dict[metadata][description],
                      self.dict[Text][headings],
                      self.dict[Text][body])
-        query = "insert into documents (id, url, title, description, sect_headings, paragraphs) values (%s, %s, %s,%s,%s,%s)"
-        arr = [(query, parameter)]
+        query = "insert into documents (url, title, description, sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
+        return arr = [(query, parameter)]
+
+    def query(self):
+        # generic query structure for TextTransformation
         for ngram_type, list_ngram_type in self.dict[ngrams][all]:
             if !list_ngram_type:
                 continue
@@ -47,7 +52,7 @@ class text_Transformation(serverObject):
                         ngram)
                 parameters = (
                     ngram,
-                    self.dict[Metadata][DOCID],
+                    self.id,
                     ngram in self.dict[ngrams][title][ngram_type],
                     ngram in self.dict[Metadata][Descriptions],
                     ngram in self.dict[metadata][keywords],
@@ -64,7 +69,7 @@ class text_Transformation(serverObject):
         return [self.meta_data, self.text, self.grams]
 
 
-class link_Analysis(serverObject):
+class link_Analysis(server_Object):
 
     def __init__(self, dict):
         self.url = dict[url]
@@ -88,7 +93,7 @@ class link_Analysis(serverObject):
         return [self.url, self.pagerank, self.inlinks]
 
 
-class crawling(serverObject):
+class crawling(server_Object):
 
     def __init___(self, dict):
         self.url = dict[url]

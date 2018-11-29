@@ -1,10 +1,10 @@
 import psycopg2
-import serverObjects.py
+import server_Objects.py
 from config import config
 
 
 class connect():
-    # serverObject is from TextTransformation, Crawling, or Link Analysis
+    # server_Object is from TextTransformation, Crawling, or Link Analysis
     def insert(server_Object):
         """ Connect to the PostgreSQL database server and Insert or Update Text Transformation"""
         conn = None
@@ -17,8 +17,16 @@ class connect():
 
             # create a cursor
             cur = conn.cursor()
+            #adds the docid correctly so we can use it for text transformations
+            #insert of ngrams
+            if isinstance(server_Object, text_Transformation):
+                (query, parameter) = server_Object.insertDoc()
+                cur.execute(query, parameter)
+                id = cur.execute("SELECT id FROM documents WHERE url = %s",(server_Object.dict[metadata][url],))
+                server_Object.addId(id)
+
             # returns an array of tuples containing the query and parameters
-            queries = serverObject.query()
+            queries = server_Object.query()
 
             for (query, parameters) in queries:
                 # execute a stored procedure
