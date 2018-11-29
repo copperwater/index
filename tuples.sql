@@ -1,7 +1,8 @@
 delete from index;
 delete from documents;
 
-insert into documents values (1, 'http://tropicalfish.com', 0.87, 0.51,
+-- Override system values here because we don't want to have to pack all the index tuples with SELECT statements.
+insert into documents overriding system value values (1, 'http://tropicalfish.com', 0.87, 0.51,
   'Freds Tropical Fish Store',
   'The best tropical fish!',
   array['finest fish', 'fishy fish', 'freds fish'],
@@ -9,7 +10,7 @@ insert into documents values (1, 'http://tropicalfish.com', 0.87, 0.51,
   '2018-04-06',
   '2018-01-15'
 );
-insert into documents values (2, 'http://example.com', 1.12, 0.77,
+insert into documents overriding system value values (2, 'http://example.com', 1.12, 0.77,
   'Example Domain',
   null,
   array['Example Domain'],

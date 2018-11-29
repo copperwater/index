@@ -3,7 +3,7 @@ drop table if exists documents;
 
 -- Document data store.
 create table documents (
-  id int constraint documents_pk primary key,
+  id int constraint documents_pk primary key generated always as identity,
   -- 2000 characters in a url is the maximum needed for widespread support
   url varchar(2000),
   pagerank numeric(7,6),
