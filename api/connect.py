@@ -17,12 +17,13 @@ class connect():
 
             # create a cursor
             cur = conn.cursor()
-            #adds the docid correctly so we can use it for text transformations
-            #insert of ngrams
+            # adds the docid correctly so we can use it for text transformations
+            # insert of ngrams
             if isinstance(server_Object, text_Transformation):
                 (query, parameter) = server_Object.insertDoc()
                 cur.execute(query, parameter)
-                id = cur.execute("SELECT id FROM documents WHERE url = %s",(server_Object.dict[metadata][url],))
+                id = cur.execute(
+                    "SELECT id FROM documents WHERE url = %s", (server_Object.dict[metadata][url],))
                 server_Object.addId(id)
 
             # returns an array of tuples containing the query and parameters
