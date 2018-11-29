@@ -74,8 +74,7 @@ class link_Analysis(server_Object):
     def __init__(self, dict):
         self.url = dict[url]
         self.page_rank = dict[pagerank]
-        self.inlinks = dict[inlinks]
-
+        self.norm_pagerank = dict[norm_pagerank]
     def query(self):
         # generic query structure for TextTransformation
         arr = []
@@ -96,9 +95,8 @@ class link_Analysis(server_Object):
 class crawling(server_Object):
 
     def __init___(self, dict):
-        self.url = dict[url]
-        self.old_url = dict[old_url]
-        self.operation = dict[operation]
+        ## we dont know the name for this
+        self.url = dict[urls]
 
     def query(self):
         # generic query structure for TextTransformation
