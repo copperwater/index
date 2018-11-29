@@ -20,7 +20,7 @@ class connect():
             # adds the docid correctly so we can use it for text transformations
             # insert of ngrams
             if isinstance(server_Object, text_Transformation):
-                (query, parameter) = server_Object.insertDoc()
+                (query, parameter) = server_Object.insert_Doc()
                 cur.execute(query, parameter)
                 id = cur.execute(
                     "SELECT id FROM documents WHERE url = %s", (server_Object.dict[metadata][url],))
