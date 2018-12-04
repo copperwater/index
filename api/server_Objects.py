@@ -11,26 +11,26 @@ class text_Transformation(server_Object):
 
     def __init__(self, dict):
         self.dict = dict
-        self.meta_data = dict[Metadata]
+        self.meta_data = dict[metadata]
         self.text = dict[text]
         self.grams = dict[grams]
 
-    def addId(self, int id):
+    def addId(self, id):
         self.id = id
 
     def insert_Doc(self):
         parameter = (self.dict[metadata][url],
                      self.dict[metadata][title],
                      self.dict[metadata][description],
-                     self.dict[Text][headings],
-                     self.dict[Text][body])
+                     self.dict[text][headings],
+                     self.dict[text][body])
         query = "insert into documents (url, title, description, sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
-        return arr = [(query, parameter)]
+        return [(query, parameter)]
 
     def query(self):
         # generic query structure for TextTransformation
         for ngram_type, list_ngram_type in self.dict[ngrams][all]:
-            if !list_ngram_type:
+            if not list_ngram_type:
                 continue
             # find the total number of occurences of 1ngrams, 2grams, 3grams, 4grams, and 5grmas
             # before we find frequency
@@ -54,7 +54,7 @@ class text_Transformation(server_Object):
                     ngram,
                     self.id,
                     ngram in self.dict[ngrams][title][ngram_type],
-                    ngram in self.dict[Metadata][Descriptions],
+                    ngram in self.dict[metadata][descriptions],
                     ngram in self.dict[metadata][keywords],
                     float(header_occurence) /
                     total_header_in_ngram_type,

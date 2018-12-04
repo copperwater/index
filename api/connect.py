@@ -1,5 +1,5 @@
 import psycopg2
-import server_Objects.py
+import server_Objects
 from config import config
 
 
