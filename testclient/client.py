@@ -9,7 +9,7 @@ import json
 # response = urlopen(request, json.dumps(data).encode('utf-8')).read()
 # print(str(response))
 
-# url = 'http://localhost:5432/text_Transformation'
+#url = 'http://localhost:5432/text_Transformation'
 url = 'http://localhost:5350/text_Transformation'
 
 data = {
@@ -20,7 +20,7 @@ data = {
     "timestamp" : "2018-11-15T16:25:56+00:00",
     "keywords" : [],
     "description" : [],
-    "docid" : -1
+    "docid" : 3
   },
   "ngrams" : {
     "all" : {
@@ -42,7 +42,7 @@ data = {
           "world" : 1
         },
         "2grams" : {
-          "what is " : 1
+          "what is" : 1
         }
       },
       "title" : {

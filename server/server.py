@@ -8,7 +8,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
 PORT_NUMBER = 5350
-# PORT_NUMBER = 5432
+#PORT_NUMBER = 5432
 
 # This dict translates the path to which the POST request was made
 # into its corresponding handler.
@@ -49,10 +49,11 @@ class messageHandler(BaseHTTPRequestHandler):
             
             # Determine which error code we'll respond to the client
             # with
-            if result is "It Works":
+            if result==1:
                 self.send_response(200)
                 print("Handler returned without error. Responding with 200 OK")
             else:
+                print(result)
                 self.send_response(500)
                 print("Handler encountered an error. Responding with 500 Internal Server Error")
 

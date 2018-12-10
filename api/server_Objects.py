@@ -11,59 +11,60 @@ class text_Transformation(server_Object):
 
     def __init__(self, dict):
         self.dict = dict
-        self.meta_data = dict[metadata]
+        self.meta_data = dict["metadata"]
         #self.text = dict[text]
-        self.grams = dict[grams]
+        self.id = 1
+        self.grams = dict["ngrams"]
 
     def addId(self, id):
         self.id = id
 
     def insert_Doc(self):
         #commented out changes since there is no text field in text transformation
-        # parameter = (self.dict[metadata][url],
-        #              self.dict[metadata][title],
-        #              self.dict[metadata][description],
+        # parameter = (self.dict["metadata"]["url"],
+        #              self.dict["metadata"][title],
+        #              self.dict["metadata"][description],
         #              self.dict[text][headings],
         #              self.dict[text][body])
-        parameter = (self.dict[metadata][url],
-                     self.dict[metadata][title],
-                     self.dict[metadata][description])
-        #query = "insert into documents (url, title, description, sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
+        parameter = (self.dict["metadata"]["url"],
+                     self.dict["metadata"]["title"],
+                     self.dict["metadata"]["description"])
+        #query = "insert into documents ("url", title, description, sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
         query = "insert into documents (url, title, description) values (%s, %s,%s)"
         return [(query, parameter)]
 
     def query(self):
+        arr = []
         # generic query structure for TextTransformation
-        for ngram_type, list_ngram_type in self.dict[ngrams][all]:
-            if not list_ngram_type:
+        for ngram_type in self.dict["ngrams"]["all"]:
+            if not self.dict["ngrams"]["all"][ngram_type]:
                 continue
             # find the total number of occurences of 1ngrams, 2grams, 3grams, 4grams, and 5grmas
             # before we find frequency
             total_in_ngram_type = 0
-            for ngram, occurence in list_ngram_type:
-                total_in_ngram_type += occurence
+            for ngram in self.dict["ngrams"]["all"][ngram_type]:
+                total_in_ngram_type += self.dict["ngrams"]["all"][ngram_type][ngram]
             # header occurence of the ngram
             header_occurence = 0
             # total header occurences of the ngram type (ie. 1gram, 2gram,
             # etc...)
             total_header_in_ngram_type = 0
-            for ngram, occurence in self.dict[ngrams][headers][ngram_type]:
-                total_header_in_ngram_type += occurence
+            for ngram in self.dict["ngrams"]["headers"][ngram_type]:
+                total_header_in_ngram_type += self.dict["ngrams"]["headers"][ngram_type][ngram]
             # loop through the actual ngrams
-            for ngram, occurence in list_ngram_type:
+            for ngram in self.dict["ngrams"]["all"][ngram_type]:
                 # if the ngram is in the headers get the occurence
-                if ngram in self.dict[ngrams][headers][ngram_type]:
-                    header_occurence = self.dict[ngrams][headers][ngram_type].get(
-                        ngram)
+                if ngram in self.dict["ngrams"]["headers"][ngram_type]:
+                    header_occurence = self.dict["ngrams"]["headers"][ngram_type][ngram]
                 parameters = (
                     ngram,
                     self.id,
-                    ngram in self.dict[ngrams][title][ngram_type],
-                    ngram in self.dict[metadata][descriptions],
-                    ngram in self.dict[metadata][keywords],
+                    ngram in self.dict["ngrams"]["title"][ngram_type],
+                    ngram in self.dict["metadata"]["description"],
+                    ngram in self.dict["metadata"]["keywords"],
                     float(header_occurence) /
                     total_header_in_ngram_type,
-                    float(occurence) /
+                    float(self.dict["ngrams"]["all"][ngram_type][ngram]) /
                     total_in_ngram_type)
                 query1 = "insert into index (ngram, docid, in_title, in_desc, in_keywords, freq_headings, freq_text) values (%s,%s,%s,%s,%s,%s,%s)"
                 arr.append((query1, parameters))
@@ -77,7 +78,7 @@ class text_Transformation(server_Object):
 class link_Analysis(server_Object):
 
     def __init__(self, dict):
-        self.url = dict[url]
+        self.url = dict["url"]
         self.page_rank = dict[pagerank]
         self.norm_pagerank = dict[norm_pagerank]
     def query(self):
@@ -87,7 +88,7 @@ class link_Analysis(server_Object):
         parameters = (
             self.dict[pagerank],
             self.dict[norm_pagerank],
-            self.dict[url],
+            self.dict["url"],
         )
         arr.append((query, parameters))
         return arr
@@ -101,7 +102,7 @@ class crawling(server_Object):
 
     def __init___(self, dict):
         ## we dont know the name for this
-        self.url = dict[urls]
+        self.url = dict["urls"]
 
     def query(self):
         # generic query structure for TextTransformation
