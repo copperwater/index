@@ -19,9 +19,11 @@ class connect():
             cur = conn.cursor()
             # adds the docid correctly so we can use it for text transformations
             # insert of ngrams
-            if isinstance(server_Object, text_Transformation):
+            # I don't believe this works but it might
+            if isinstance(server_Object, text_Transformation(server_Object)):
                 (query, parameter) = server_Object.insert_Doc(server_Object)
                 cur.execute(query, parameter)
+                conn.commit()
                 id = cur.execute(
                     "SELECT id FROM documents WHERE url = '%s'", (server_Object.dict[metadata][url],))
                 server_Object.addId(server_Object, id)
@@ -35,7 +37,7 @@ class connect():
                 # execute a stored procedure
                 #print((query,parameters))
                 cur.execute(query, parameters)
-            conn.commit()
+                conn.commit()
 
             # The PostgreSQL database server response
             # response = cur.fetchone()
