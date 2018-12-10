@@ -13,7 +13,7 @@ class text_Transformation(server_Object):
         self.dict = dict
         self.meta_data = dict["metadata"]
         #self.text = dict[text]
-        self.id = 1
+        # self.id = 1
         self.grams = dict["ngrams"]
 
     def addId(self, id):
@@ -79,15 +79,15 @@ class link_Analysis(server_Object):
 
     def __init__(self, dict):
         self.url = dict["url"]
-        self.page_rank = dict[pagerank]
-        self.norm_pagerank = dict[norm_pagerank]
+        self.page_rank = dict["pagerank"]
+        self.norm_pagerank = dict["norm_pagerank"]
     def query(self):
         # generic query structure for TextTransformation
         arr = []
         query = "update documents set pagerank = %s,  norm_pagerank = %s where url = %s"
         parameters = (
-            self.dict[pagerank],
-            self.dict[norm_pagerank],
+            self.dict["pagerank"],
+            self.dict["norm_pagerank"],
             self.dict["url"],
         )
         arr.append((query, parameters))
