@@ -12,19 +12,24 @@ class text_Transformation(server_Object):
     def __init__(self, dict):
         self.dict = dict
         self.meta_data = dict[metadata]
-        self.text = dict[text]
+        #self.text = dict[text]
         self.grams = dict[grams]
 
     def addId(self, id):
         self.id = id
 
     def insert_Doc(self):
+        #commented out changes since there is no text field in text transformation
+        # parameter = (self.dict[metadata][url],
+        #              self.dict[metadata][title],
+        #              self.dict[metadata][description],
+        #              self.dict[text][headings],
+        #              self.dict[text][body])
         parameter = (self.dict[metadata][url],
                      self.dict[metadata][title],
-                     self.dict[metadata][description],
-                     self.dict[text][headings],
-                     self.dict[text][body])
-        query = "insert into documents (url, title, description, sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
+                     self.dict[metadata][description])
+        #query = "insert into documents (url, title, description, sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
+        query = "insert into documents (url, title, description) values (%s, %s,%s)"
         return [(query, parameter)]
 
     def query(self):

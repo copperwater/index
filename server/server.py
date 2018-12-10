@@ -8,6 +8,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
 PORT_NUMBER = 5350
+# PORT_NUMBER = 5432
 
 # This dict translates the path to which the POST request was made
 # into its corresponding handler.
