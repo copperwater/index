@@ -43,7 +43,7 @@ class ApiRequests():
                          dict[Metadata][Descriptions],
                          dict[Text][headings],
                          dict[Text][body])
-        except:
+        except BaseException:
             print("error commiting to database")
             return False
 
@@ -51,7 +51,7 @@ class ApiRequests():
             try:
                 curr.execute(sql2, ngram[gram], ngram[in_title], ngram[in_description],
                              ngram[in_keywords], ngram[freq_headings], ngram[freq_text])
-            except:
+            except BaseException:
                 print("error commiting to database")
                 return False
         return False
@@ -66,7 +66,7 @@ class ApiRequests():
         if(dict[operation] == "removed"):
             try:
                 curr.execute(sql, dict[url])
-            except:
+            except BaseException:
                 print("error commiting to database")
                 return False
             # delete  from index
@@ -74,7 +74,7 @@ class ApiRequests():
         if(dict[operation] == "moved"):
             try:
                 curr.execute(sql2, dict[url], dict[url])
-            except:
+            except BaseException:
                 print("error commiting to database")
                 return False
 
@@ -88,7 +88,7 @@ class ApiRequests():
 		where documents_pk = %s"""
         try:
             curr.execute(sql, dict[pagerank], dict[norm_pagerank], dict[url])
-        except:
+        except BaseException:
             print("error commiting to database")
             return False
         return True
@@ -96,13 +96,14 @@ class ApiRequests():
 
 # still need checks if not indexed yet by TextTransformation
 
+
     def Link(dict):
         sql = """update documents
 		set pagerank = %s ,  norm_pagerank = %s
 		where documents_pk = %s"""
         try:
             curr.execute(sql, dict[pagerank], dict[norm_pagerank], dict[url])
-        except:
+        except BaseException:
             print("error commiting to database")
             return False
 

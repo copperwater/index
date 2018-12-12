@@ -33,7 +33,7 @@ class connect():
 
             for (query, parameters) in queries:
                 # execute a stored procedure
-                #print((query,parameters))
+                # print((query,parameters))
                 cur.execute(query, parameters)
             conn.commit()
 
@@ -48,7 +48,7 @@ class connect():
             # return "It Works"
         except (Exception, psycopg2.DatabaseError) as error:
             # print("CAUGHT EXCEPTION")
-            print("ERROR: ",error)
+            print("ERROR: ", error)
             return error
         finally:
             if conn is not None:
