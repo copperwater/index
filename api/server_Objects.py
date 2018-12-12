@@ -20,7 +20,7 @@ class text_Transformation(server_Object):
         self.id = id
 
     def insert_Doc(self):
-        #commented out changes since there is no text field in text transformation
+        # commented out changes since there is no text field in text transformation
         # parameter = (self.dict["metadata"]["url"],
         #              self.dict["metadata"][title],
         #              self.dict["metadata"][description],
@@ -29,7 +29,8 @@ class text_Transformation(server_Object):
         parameter = (self.dict["metadata"]["url"],
                      self.dict["metadata"]["title"],
                      self.dict["metadata"]["description"])
-        #query = "insert into documents ("url", title, description, sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
+        # query = "insert into documents ("url", title, description,
+        # sect_headings, paragraphs) values (%s, %s,%s,%s,%s)"
         query = "insert into documents (url, title, description) values (%s, %s,%s)"
         return [(query, parameter)]
 
@@ -70,7 +71,8 @@ class text_Transformation(server_Object):
                 arr.append((query1, parameters))
         return arr
 
-    #unused function since query returns a list of tuples for (query, parameter)
+    # unused function since query returns a list of tuples for (query,
+    # parameter)
     def toParam(self):
         return [self.meta_data, self.text, self.grams]
 
@@ -79,8 +81,14 @@ class link_Analysis(server_Object):
 
     def __init__(self, dict):
         self.url = dict["url"]
+<<<<<<< HEAD
         self.page_rank = dict["pagerank"]
         self.norm_pagerank = dict["norm_pagerank"]
+=======
+        self.page_rank = dict[pagerank]
+        self.norm_pagerank = dict[norm_pagerank]
+
+>>>>>>> origin/master
     def query(self):
         # generic query structure for TextTransformation
         arr = []
@@ -93,7 +101,8 @@ class link_Analysis(server_Object):
         arr.append((query, parameters))
         return arr
 
-    #unused function since query returns a list of tuples for (query, parameter)
+    # unused function since query returns a list of tuples for (query,
+    # parameter)
     def toParam(self):
         return [self.url, self.pagerank, self.inlinks]
 
@@ -101,7 +110,7 @@ class link_Analysis(server_Object):
 class crawling(server_Object):
 
     def __init___(self, dict):
-        ## we dont know the name for this
+        # we dont know the name for this
         self.url = dict["urls"]
 
     def query(self):
@@ -112,6 +121,7 @@ class crawling(server_Object):
             arr.append((query, (link,)))
         return arr
 
-    #unused function since query returns a list of tuples for (query, parameter)
+    # unused function since query returns a list of tuples for (query,
+    # parameter)
     def toParam(self):
         return [self.url, self.old_url, self.operation]
